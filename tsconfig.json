@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/redux/features/deliverGoods"],
+  "exclude": ["node_modules"],
+  "typeRoots": ["./node_modules/@types", "./types"],
+  "target": "esnext",
+  "module": "esnext",
+  "lib": ["dom", "esnext"],
+  "strict": true,
+  "moduleResolution": "node",
+  "esModuleInterop": true,
+  "skipLibCheck": true,
+}
