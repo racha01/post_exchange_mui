@@ -279,6 +279,16 @@ export default function DeliverGoodsAddComponent() {
             [name]: convertedValue,
         }));
     };
+    const textFieldRef = React.useRef<HTMLInputElement | null>(null);
+    // const textFieldRef = React.useRef<HTMLInputElement | null>(null);
+    // const textFieldRef = React.useRef<HTMLInputElement | null>(null);
+    // const textFieldRef = React.useRef<HTMLInputElement | null>(null);
+    // const textFieldRef = React.useRef<HTMLInputElement | null>(null);
+    const handleClick = () => {
+        if (textFieldRef.current) {
+        //   textFieldRef.current.select();
+        }
+      };
     const theme = useTheme();
 
     return (
@@ -347,6 +357,8 @@ export default function DeliverGoodsAddComponent() {
                                     }}
                                     value={updateDeliverGoods.wholesale_price}
                                     onChange={handleChange}
+                                    inputRef={textFieldRef} 
+                                    onClick={handleClick}
                                     helperText={wholesalePriceIsZero ? "Incorrect wholesale price." : ""}
                                 />
                             </Box>
@@ -366,6 +378,8 @@ export default function DeliverGoodsAddComponent() {
                                     }}
                                     value={updateDeliverGoods.cash_price}
                                     onChange={handleChange}
+                                    // inputRef={textFieldRef} 
+                                    onClick={handleClick}
                                     helperText={cashPriceIsZero ? "Incorrect cash price." : ""}
                                 />
                             </Box>
@@ -385,6 +399,8 @@ export default function DeliverGoodsAddComponent() {
                                     }}
                                     value={updateDeliverGoods.accruals_price}
                                     onChange={handleChange}
+                                    // inputRef={textFieldRef} 
+                                    onClick={handleClick}
                                     helperText={accrualsPriceIsZero ? "Incorrect accruals price." : ""}
                                 />
                             </Box>
@@ -404,6 +420,8 @@ export default function DeliverGoodsAddComponent() {
                                     }}
                                     value={updateDeliverGoods.amount}
                                     onChange={handleChange}
+                                    // inputRef={textFieldRef} 
+                                    onClick={handleClick}
                                     helperText={amountIsZero ? "Incorrect amount." : ""}
                                 />
                             </Box>
@@ -423,6 +441,8 @@ export default function DeliverGoodsAddComponent() {
                                     }}
                                     value={updateDeliverGoods.leftovers}
                                     onChange={handleChange}
+                                    // inputRef={textFieldRef} 
+                                    onClick={handleClick}
                                 />
                             </Box>
                             <Box sx={{ gridColumn: 'span 6' }}>
