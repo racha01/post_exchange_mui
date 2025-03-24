@@ -238,12 +238,12 @@ export default function DeliverGoodsEditComponent({ editOpen, editIsError, onClo
             setAnimationKey((prevKey) => prevKey + 1)
         }
         else {
-            await onClose();
             const updateData = {...updateDeliverGoods, deliver_good_date: dayjs(deliverGoodsDate)?.tz('Asia/Bangkok').toISOString() || dayjs().tz('Asia/Bangkok').toISOString()}
             await setValueDefault();
             setOpen(false);
             setIsError(false);
-            dispatch(updateDeliverGoodsStore({ id: id, updateDeliverGoods: updateData }))
+            await dispatch(updateDeliverGoodsStore({ id: id, updateDeliverGoods: updateData }))
+            await onClose();
         }
     }
 

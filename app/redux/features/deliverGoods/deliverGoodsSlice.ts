@@ -82,9 +82,9 @@ export const updateDeliverGoodsStore = createAsyncThunk('api/deliver-goods/updat
     try {
         const response = await axios.put(`${API_URL}/${id}`, updateDeliverGoods);
 
-        const responseGetData = await axios.get(API_URL);
-        const datas = responseGetData.data;
-        return datas;
+        // const responseGetData = await axios.get(API_URL);
+        // const datas = responseGetData.data;
+        // return datas;
     } catch (error: any) {
         return rejectWithValue(error.response?.data || apiErrorException);
     }
@@ -138,7 +138,7 @@ const apiDeliverGoodsSlice = createSlice({
             .addCase(updateDeliverGoodsStore.fulfilled,
                 (state, action) => {
                     state.loading = false;
-                    state.deliverGoodsList = action.payload as Pagination<GetDeliverGoods>
+                    // state.deliverGoodsList = action.payload as Pagination<GetDeliverGoods>
                 })
             .addCase(updateDeliverGoodsStore.rejected, (state, action) => {
                 state.loading = false;

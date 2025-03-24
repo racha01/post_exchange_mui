@@ -209,8 +209,20 @@ export default function DeliverGoodsTable({ sellerId, startDate, endDate }: Prop
     const [deleteOpen, setDeleteOpen] = React.useState(false);
     const [editIsError, setEditIsError] = React.useState(false);
     React.useEffect(() => {
-        dispatch(fetchDeliverGoodsDatas({}));
-    }, [dispatch]);
+        const deliverGoodsParam: DeliverGoodQueryParam = {};
+
+        if (sellerId !== undefined) {
+            deliverGoodsParam.sellerId = sellerId;
+        }
+
+        if (startDate !== null && endDate !== null) {
+            deliverGoodsParam.startDate = startDate;
+            deliverGoodsParam.endDate = endDate;
+        }
+
+        const params: DeliverGoodQueryParam = { ...deliverGoodsParam };
+        dispatch(fetchDeliverGoodsDatas(params));
+    }, [dispatch, sellerId, startDate, endDate]);
 
     // const rows: Pagination<GetDeliverGoods> | null = deliverGoodsList;
     const handleRequestSort = (
@@ -222,23 +234,6 @@ export default function DeliverGoodsTable({ sellerId, startDate, endDate }: Prop
         setOrderBy(property);
     };
 
-    // const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
-    //     const selectedIndex = selected.indexOf(id);
-    //     let newSelected: readonly number[] = [];
-    //     if (selectedIndex === -1) {
-    //         newSelected = newSelected.concat(selected, id);
-    //     } else if (selectedIndex === 0) {
-    //         newSelected = newSelected.concat(selected.slice(1));
-    //     } else if (selectedIndex === selected.length - 1) {
-    //         newSelected = newSelected.concat(selected.slice(0, -1));
-    //     } else if (selectedIndex > 0) {
-    //         newSelected = newSelected.concat(
-    //             selected.slice(0, selectedIndex),
-    //             selected.slice(selectedIndex + 1),
-    //         );
-    //     }
-    //     setSelected(newSelected);
-    // };
     const [receivedData, setReceivedData] = React.useState("");
     const handleReceiveData = (dataFromB: string) => {
         setReceivedData(dataFromB);
@@ -263,7 +258,6 @@ export default function DeliverGoodsTable({ sellerId, startDate, endDate }: Prop
         setEditOpen(false);
         await delay(500);
         const deliverGoodsParam: DeliverGoodQueryParam = {};
-
         if (sellerId !== undefined) {
             deliverGoodsParam.sellerId = sellerId;
         }

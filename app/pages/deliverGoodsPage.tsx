@@ -139,7 +139,7 @@ const DeliverGoodsPage = () => {
         }
     }
     const handleCilckSearch = () => {
-        setIsSearched(true);
+        // setIsSearched(true);
         dispatch(fetchDeliverGoodsDatas({
             sellerId: sellerId,
             startDate: selectDate.startDate as string,
@@ -190,8 +190,11 @@ const DeliverGoodsPage = () => {
                 <Box>
                     <Stack direction="row" spacing={2}>
                         <Box>
-                            <DeliverGoodsAddComponent />
-                            {(sellerId && isSearched) && <Button
+                            <DeliverGoodsAddComponent
+                                startDate={selectDate.startDate ?? dateRange[0].startDate.toISOString()}
+                                endDate={selectDate.endDate ?? dateRange[0].endDate.toISOString()}
+                                sellerId={sellerId} />
+                            {sellerId && <Button
                                 sx={{ marginLeft: '3px' }}
                                 variant="outlined"
                                 startIcon={<ArrowUpwardIcon />}
@@ -263,7 +266,7 @@ const DeliverGoodsPage = () => {
                             />
                         </DatePickerRangePaper>}
                 </Stack>
-                <Box>
+                {/* <Box>
                     <Button
                         variant="contained"
                         color="success"
@@ -272,11 +275,11 @@ const DeliverGoodsPage = () => {
                     >
                         ค้นหา
                     </Button>
-                </Box>
+                </Box> */}
             </Stack>
             <DeliverGoodsTable
-                startDate={selectDate.startDate}
-                endDate={selectDate.endDate}
+                startDate={selectDate.startDate ?? dateRange[0].startDate.toISOString()}
+                endDate={selectDate.endDate ?? dateRange[0].endDate.toISOString()}
                 sellerId={sellerId} />
         </Box>
     )

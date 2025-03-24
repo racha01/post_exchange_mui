@@ -22,11 +22,11 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from "dayjs";
-import { defaultDeliverGoods, UpdateDeliverGoods } from '../interfaces/api/deliverGoods';
-import { delay } from '../functions/time';
+import { defaultDeliverGoods, DeliverGoodQueryParam, UpdateDeliverGoods } from '../interfaces/api/deliverGoods';
+import { defaultStartDate, delay } from '../functions/time';
 import { defaultUpdateProduct, GetProduct, GetProductDropDown, GetProductDropDownList, GetProductList } from '../interfaces/api/product';
 import { Pagination } from '../interfaces/api/common';
-import { createDeliverGoods } from '../redux/features/deliverGoods/deliverGoodsSlice';
+import { createDeliverGoods, fetchDeliverGoodsDatas } from '../redux/features/deliverGoods/deliverGoodsSlice';
 import { useAppDispatch } from '../hooks';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -59,7 +59,13 @@ interface OptionType {
     value: number;
 }
 
-export default function DeliverGoodsAddComponent() {
+interface PropDeliverGoodsAdd {
+    sellerId: string | undefined,
+    startDate: string | null,
+    endDate: string | null
+}
+
+export default function DeliverGoodsAddComponent({ sellerId, startDate, endDate }: PropDeliverGoodsAdd) {
     const [open, setOpen] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [isVisible, setIsVisible] = React.useState(false);
@@ -224,7 +230,20 @@ export default function DeliverGoodsAddComponent() {
             await setValueDefault();
             setOpen(false);
             setIsError(false);
-            dispatch(createDeliverGoods(deliverGoods))
+            await dispatch(createDeliverGoods(deliverGoods))
+            const deliverGoodsParam: DeliverGoodQueryParam = {};
+
+            if (sellerId !== undefined) {
+                deliverGoodsParam.sellerId = sellerId;
+            }
+
+            if (startDate !== null && endDate !== null) {
+                deliverGoodsParam.startDate = startDate;
+                deliverGoodsParam.endDate = endDate;
+            }
+
+            const params: DeliverGoodQueryParam = { ...deliverGoodsParam };
+            await dispatch(fetchDeliverGoodsDatas(params))
         }
     }
 
