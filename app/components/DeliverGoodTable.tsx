@@ -261,6 +261,7 @@ export default function DeliverGoodsTable({ sellerId, startDate, endDate }: Prop
     const handleClose = async () => {
         setEditIsError(false)
         setEditOpen(false);
+        await delay(500);
         const deliverGoodsParam: DeliverGoodQueryParam = {};
 
         if (sellerId !== undefined) {
@@ -272,8 +273,7 @@ export default function DeliverGoodsTable({ sellerId, startDate, endDate }: Prop
         }
 
         const params: DeliverGoodQueryParam = { ...deliverGoodsParam };
-        dispatch(fetchDeliverGoodsDatas(params))
-        await delay(500);
+        await dispatch(fetchDeliverGoodsDatas(params))
     };
     const handleDeleteClose = async () => {
         setDeleteOpen(false);
@@ -318,7 +318,7 @@ export default function DeliverGoodsTable({ sellerId, startDate, endDate }: Prop
     );
     if (loading) return <FullScreenLoading loading={loading} />
     return (
-        <Box sx={{ width: '100%', zIndex: 0}}>
+        <Box sx={{ width: '100%', zIndex: 0 }}>
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 600 }}>
                     <Table

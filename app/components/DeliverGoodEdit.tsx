@@ -91,8 +91,8 @@ export default function DeliverGoodsEditComponent({ editOpen, editIsError, onClo
 
     const futureDate = dayjs()
 
-    function handleDateChange(newValue: Dayjs | null) {
-        setdeliverGoodsDate(newValue)
+    function handleDateChange(dateValue: Dayjs | null) {
+        setdeliverGoodsDate(dateValue)
     }
 
     const dropdownList: DropdownScheduledLineList = dropdownScheduledLineData.map(item => ({
@@ -200,11 +200,12 @@ export default function DeliverGoodsEditComponent({ editOpen, editIsError, onClo
         await delay(100);
     }
 
-    const handleClose = async () => {
-        setOpen(false);
-        setIsError(false);
-        await setValueDefault();
-    };
+    // const handleClose = async () => {
+    //     // setOpen(false);
+    //     // setIsError(false);
+    //     // await setValueDefault();
+    //     onClose();
+    // };
     const handleValueisNull = (value: string) => {
         if (!value) {
             return true
@@ -237,11 +238,12 @@ export default function DeliverGoodsEditComponent({ editOpen, editIsError, onClo
             setAnimationKey((prevKey) => prevKey + 1)
         }
         else {
-            updateDeliverGoods.deliver_good_date = dayjs(deliverGoodsDate)?.tz('Asia/Bangkok').toISOString() || dayjs().tz('Asia/Bangkok').toISOString()
+            await onClose();
+            const updateData = {...updateDeliverGoods, deliver_good_date: dayjs(deliverGoodsDate)?.tz('Asia/Bangkok').toISOString() || dayjs().tz('Asia/Bangkok').toISOString()}
             await setValueDefault();
             setOpen(false);
             setIsError(false);
-            dispatch(updateDeliverGoodsStore({ id: id, updateDeliverGoods: deliverGoods }))
+            dispatch(updateDeliverGoodsStore({ id: id, updateDeliverGoods: updateData }))
         }
     }
 
@@ -309,7 +311,7 @@ export default function DeliverGoodsEditComponent({ editOpen, editIsError, onClo
 
             <Dialog
                 open={open}
-                onClose={handleClose}
+                onClose={onClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 maxWidth={'lg'}
@@ -446,7 +448,7 @@ export default function DeliverGoodsEditComponent({ editOpen, editIsError, onClo
                                     name='deliver_good_date'
                                     label='Deliver Goods Date'
                                     date={deliverGoodsDate ?? dayjs()}
-                                    handleDateChange={() => handleDateChange(deliverGoodsDate)}
+                                    handleDateChange={(dateValue) => handleDateChange(dateValue)}
                                 />
                                 {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DatePicker sx={{ width: '100%' }}
@@ -462,7 +464,7 @@ export default function DeliverGoodsEditComponent({ editOpen, editIsError, onClo
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="outlined" onClick={handleClose}>ปิด</Button>
+                    <Button variant="outlined" onClick={onClose}>ปิด</Button>
                     <Button variant="contained" color="warning" onClick={() => handleUpdate(deliverGoods.id, updateDeliverGoods)} autoFocus>
                         แก้ไข
                     </Button>

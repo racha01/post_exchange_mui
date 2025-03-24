@@ -86,10 +86,8 @@ export default function DeliverGoodsAddComponent() {
 
     const futureDate = dayjs()
 
-    function handleDateChange(newValue: Dayjs | null) {
-        console.log("change data")
-        console.log(newValue)
-        setdeliverGoodsDate(newValue)
+    function handleDateChange(dateValue: Dayjs | null) {
+        setdeliverGoodsDate(dateValue)
     }
 
     const dropdownList: DropdownScheduledLineList = dropdownScheduledLineData.map(item => ({
@@ -279,16 +277,12 @@ export default function DeliverGoodsAddComponent() {
             [name]: convertedValue,
         }));
     };
-    const textFieldRef = React.useRef<HTMLInputElement | null>(null);
-    // const textFieldRef = React.useRef<HTMLInputElement | null>(null);
-    // const textFieldRef = React.useRef<HTMLInputElement | null>(null);
-    // const textFieldRef = React.useRef<HTMLInputElement | null>(null);
-    // const textFieldRef = React.useRef<HTMLInputElement | null>(null);
-    const handleClick = () => {
-        if (textFieldRef.current) {
-        //   textFieldRef.current.select();
-        }
-      };
+    const wholesalePriceFieldRef = React.useRef<HTMLInputElement | null>(null);
+    const cashPriceFieldRef = React.useRef<HTMLInputElement | null>(null);
+    const accrualsFieldRef = React.useRef<HTMLInputElement | null>(null);
+    const amountFieldRef = React.useRef<HTMLInputElement | null>(null);
+    const leftoversFieldRef = React.useRef<HTMLInputElement | null>(null);
+
     const theme = useTheme();
 
     return (
@@ -357,8 +351,12 @@ export default function DeliverGoodsAddComponent() {
                                     }}
                                     value={updateDeliverGoods.wholesale_price}
                                     onChange={handleChange}
-                                    inputRef={textFieldRef} 
-                                    onClick={handleClick}
+                                    inputRef={wholesalePriceFieldRef}
+                                    onClick={() => {
+                                        if (wholesalePriceFieldRef.current) {
+                                            wholesalePriceFieldRef.current.select();
+                                        }
+                                    }}
                                     helperText={wholesalePriceIsZero ? "Incorrect wholesale price." : ""}
                                 />
                             </Box>
@@ -378,8 +376,12 @@ export default function DeliverGoodsAddComponent() {
                                     }}
                                     value={updateDeliverGoods.cash_price}
                                     onChange={handleChange}
-                                    // inputRef={textFieldRef} 
-                                    onClick={handleClick}
+                                    inputRef={cashPriceFieldRef}
+                                    onClick={() => {
+                                        if (cashPriceFieldRef.current) {
+                                            cashPriceFieldRef.current.select();
+                                        }
+                                    }}
                                     helperText={cashPriceIsZero ? "Incorrect cash price." : ""}
                                 />
                             </Box>
@@ -399,8 +401,12 @@ export default function DeliverGoodsAddComponent() {
                                     }}
                                     value={updateDeliverGoods.accruals_price}
                                     onChange={handleChange}
-                                    // inputRef={textFieldRef} 
-                                    onClick={handleClick}
+                                    inputRef={accrualsFieldRef}
+                                    onClick={() => {
+                                        if (accrualsFieldRef.current) {
+                                            accrualsFieldRef.current.select();
+                                        }
+                                    }}
                                     helperText={accrualsPriceIsZero ? "Incorrect accruals price." : ""}
                                 />
                             </Box>
@@ -420,8 +426,12 @@ export default function DeliverGoodsAddComponent() {
                                     }}
                                     value={updateDeliverGoods.amount}
                                     onChange={handleChange}
-                                    // inputRef={textFieldRef} 
-                                    onClick={handleClick}
+                                    inputRef={amountFieldRef}
+                                    onClick={() => {
+                                        if (amountFieldRef.current) {
+                                            amountFieldRef.current.select();
+                                        }
+                                    }}
                                     helperText={amountIsZero ? "Incorrect amount." : ""}
                                 />
                             </Box>
@@ -441,8 +451,12 @@ export default function DeliverGoodsAddComponent() {
                                     }}
                                     value={updateDeliverGoods.leftovers}
                                     onChange={handleChange}
-                                    // inputRef={textFieldRef} 
-                                    onClick={handleClick}
+                                    inputRef={leftoversFieldRef}
+                                    onClick={() => {
+                                        if (leftoversFieldRef.current) {
+                                            leftoversFieldRef.current.select();
+                                        }
+                                    }}
                                 />
                             </Box>
                             <Box sx={{ gridColumn: 'span 6' }}>
@@ -451,7 +465,7 @@ export default function DeliverGoodsAddComponent() {
                                     name='deliver_good_date'
                                     label='วันที่ส่งสินค้า'
                                     date={deliverGoodsDate ?? dayjs()}
-                                    handleDateChange={() => handleDateChange(deliverGoodsDate)}
+                                    handleDateChange={(dateValue) => handleDateChange(dateValue)}
                                 />
                                 {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DatePicker sx={{ width: '100%' }}
